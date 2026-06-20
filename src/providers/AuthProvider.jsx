@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
         try {
             setAuthLoading(true);
 
-            const response = await fetch(`${API_URL}/api/auth/me`, {
+            const response = await fetch(`${API_URL}/api/jwt/me`, {
                 credentials: "include",
                 cache: "no-store",
             });
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
     };
 
     const logout = async () => {
-        await fetch(`${API_URL}/api/auth/logout`, {
+        await fetch(`${API_URL}/api/jwt/logout`, {
             method: "POST",
             credentials: "include",
         });

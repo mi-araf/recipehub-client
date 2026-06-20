@@ -31,7 +31,7 @@ export default function WhyRecipeHub() {
             <div className="rh-home-card rounded-3xl px-6 py-14 sm:px-10">
                 <SectionHeader
                     eyebrow="Why RecipeHub"
-                    title="Built for creators, readers, and admins."
+                    title="Built for Chefs, Foodies, and Curators."
                     description="A recipe platform should feel simple on the surface and organized behind the scenes."
                 />
 
