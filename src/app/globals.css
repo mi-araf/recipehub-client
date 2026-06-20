@@ -1,3 +1,156 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 @plugin "daisyui";
+
+:root {
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+::selection {
+    background: rgba(16, 185, 129, 0.25);
+}
+
+.recipehub-shell {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(16, 185, 129, 0.13), transparent 32rem),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.11), transparent 30rem),
+        linear-gradient(180deg, #fffaf3 0%, #ffffff 45%, #f7faf9 100%);
+}
+
+[data-theme="dark"] .recipehub-shell {
+    background:
+        radial-gradient(circle at top left, rgba(16, 185, 129, 0.16), transparent 32rem),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.09), transparent 30rem),
+        linear-gradient(180deg, #07110e 0%, #0b1210 48%, #090f0d 100%);
+}
+
+.glass-panel {
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 55px rgba(15, 23, 42, 0.07);
+}
+
+[data-theme="dark"] .glass-panel {
+    border-color: rgba(148, 163, 184, 0.12);
+    background: rgba(10, 17, 14, 0.72);
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+}
+
+.nav-link {
+    position: relative;
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(51, 65, 85, 0.9);
+    transition: all 180ms ease;
+}
+
+[data-theme="dark"] .nav-link {
+    color: rgba(226, 232, 240, 0.86);
+}
+
+.nav-link:hover,
+.nav-link-active {
+    color: #047857;
+    background: rgba(16, 185, 129, 0.09);
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link-active {
+    color: #6ee7b7;
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.section-container {
+    width: min(1180px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+.recipehub-page-card {
+    border: 1px solid rgba(120, 113, 108, 0.16);
+    background:
+        radial-gradient(circle at 88% 18%, rgba(251, 191, 36, 0.18), transparent 18rem),
+        radial-gradient(circle at 92% 80%, rgba(16, 185, 129, 0.12), transparent 18rem),
+        linear-gradient(135deg, #fff8e8 0%, #fffaf2 46%, #f8f4e8 100%);
+    color: #1c1917;
+    box-shadow: 0 26px 80px rgba(28, 25, 23, 0.12);
+}
+
+[data-theme="dark"] .recipehub-page-card {
+    border-color: rgba(245, 158, 11, 0.12);
+    background:
+        radial-gradient(circle at 88% 18%, rgba(245, 158, 11, 0.1), transparent 18rem),
+        radial-gradient(circle at 92% 80%, rgba(16, 185, 129, 0.1), transparent 18rem),
+        linear-gradient(135deg, #11100d 0%, #16130e 48%, #0d1511 100%);
+    color: #fff7ed;
+    box-shadow: 0 26px 80px rgba(0, 0, 0, 0.38);
+}
+
+.recipehub-muted-text {
+    color: #6b6257;
+}
+
+[data-theme="dark"] .recipehub-muted-text {
+    color: #c8bfb2;
+}
+
+.recipehub-soft-panel {
+    border: 1px solid rgba(120, 113, 108, 0.12);
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 24px 70px rgba(28, 25, 23, 0.1);
+}
+
+[data-theme="dark"] .recipehub-soft-panel {
+    border-color: rgba(245, 158, 11, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+}
+
+.recipehub-mini-card {
+    background: rgba(255, 255, 255, 0.72);
+    color: #1c1917;
+}
+
+[data-theme="dark"] .recipehub-mini-card {
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff7ed;
+}
+
+.recipehub-outline-btn {
+    border: 1px solid rgba(120, 113, 108, 0.22);
+    background: rgba(255, 255, 255, 0.55);
+    color: #1c1917;
+}
+
+.recipehub-outline-btn:hover {
+    border-color: rgba(16, 185, 129, 0.42);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+[data-theme="dark"] .recipehub-outline-btn {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff7ed;
+}
+
+[data-theme="dark"] .recipehub-outline-btn:hover {
+    background: rgba(16, 185, 129, 0.12);
+}
