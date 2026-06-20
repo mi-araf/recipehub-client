@@ -154,3 +154,91 @@ body {
 [data-theme="dark"] .recipehub-outline-btn:hover {
     background: rgba(16, 185, 129, 0.12);
 }
+
+@theme {
+    --spacing-140: 35rem;
+}
+
+.rh-section {
+    width: min(1180px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+.rh-home-card {
+    border: 1px solid rgba(120, 113, 108, 0.14);
+    background:
+        radial-gradient(circle at 88% 14%, rgba(251, 191, 36, 0.16), transparent 18rem),
+        radial-gradient(circle at 92% 82%, rgba(16, 185, 129, 0.1), transparent 18rem),
+        linear-gradient(135deg, #fff8e7 0%, #fffaf0 45%, #f8f2e5 100%);
+    color: #1c1917;
+    box-shadow: 0 26px 80px rgba(28, 25, 23, 0.1);
+}
+
+[data-theme="dark"] .rh-home-card {
+    border-color: rgba(245, 158, 11, 0.1);
+    background:
+        radial-gradient(circle at 88% 14%, rgba(245, 158, 11, 0.1), transparent 18rem),
+        radial-gradient(circle at 92% 82%, rgba(16, 185, 129, 0.1), transparent 18rem),
+        linear-gradient(135deg, #11100d 0%, #15120d 48%, #0d1511 100%);
+    color: #fff7ed;
+    box-shadow: 0 26px 80px rgba(0, 0, 0, 0.36);
+}
+
+.rh-card {
+    border: 1px solid rgba(120, 113, 108, 0.14);
+    background: rgba(255, 255, 255, 0.66);
+    color: #1c1917;
+    box-shadow: 0 18px 55px rgba(28, 25, 23, 0.08);
+}
+
+[data-theme="dark"] .rh-card {
+    border-color: rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.055);
+    color: #fff7ed;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+}
+
+.rh-title {
+    color: #1c1917;
+}
+
+[data-theme="dark"] .rh-title {
+    color: #fff7ed;
+}
+
+.rh-muted {
+    color: #6f675b;
+}
+
+[data-theme="dark"] .rh-muted {
+    color: #c9bfb0;
+}
+
+.rh-eyebrow {
+    color: #047857;
+}
+
+[data-theme="dark"] .rh-eyebrow {
+    color: #6ee7b7;
+}
+
+.rh-outline-btn {
+    border: 1px solid rgba(120, 113, 108, 0.22);
+    background: rgba(255, 255, 255, 0.58);
+    color: #1c1917;
+}
+
+.rh-outline-btn:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+[data-theme="dark"] .rh-outline-btn {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff7ed;
+}
+
+[data-theme="dark"] .rh-outline-btn:hover {
+    background: rgba(16, 185, 129, 0.12);
+}
