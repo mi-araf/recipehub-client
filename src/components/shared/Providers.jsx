@@ -1,10 +1,11 @@
 "use client";
 
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 export default function Providers({ children }) {
     return (
-        <>
+        <AuthProvider>
             {children}
 
             <Toaster
@@ -18,6 +19,6 @@ export default function Providers({ children }) {
                     },
                 }}
             />
-        </>
+        </AuthProvider>
     );
 }
