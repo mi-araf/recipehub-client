@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { GiChefToque } from "react-icons/gi";
 import { PiSparkleFill } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
-import { FiLogIn, FiMenu, FiUser, FiX } from "react-icons/fi";
+import { FiLogIn, FiMenu, FiUser, FiX, FiShield } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "@/providers/AuthProvider";
 import Image from "next/image";
@@ -22,6 +22,10 @@ const publicLinks = [
 const protectedLinks = [
     { label: "Dashboard", href: "/dashboard", icon: RxDashboard },
     { label: "Profile", href: PROFILE_HREF, icon: FiUser },
+];
+
+const adminLinks = [
+    { label: "Admin", href: "/admin-dashboard", icon: FiShield },
 ];
 
 function getUserInfo(user) {
@@ -82,6 +86,10 @@ export default function Navbar() {
     const isActive = (href) => {
         if (href === "/") return pathname === "/";
 
+        if (href === "/admin-dashboard") {
+            return pathname === "/admin-dashboard" || pathname.startsWith("/admin-dashboard/");
+        }
+
         if (href === "/dashboard") {
             return (
                 pathname === "/dashboard" ||
@@ -130,6 +138,24 @@ export default function Navbar() {
 
                     {isLoggedIn &&
                         protectedLinks.map((link) => {
+                            const Icon = link.icon;
+
+                            return (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`nav-link flex items-center gap-2 ${isActive(link.href) ? "nav-link-active" : ""
+                                        }`}
+                                >
+                                    <Icon />
+                                    {link.label}
+                                </Link>
+                            );
+                        })}
+
+                    {isLoggedIn &&
+                        user?.role === "admin" &&
+                        adminLinks.map((link) => {
                             const Icon = link.icon;
 
                             return (
@@ -250,6 +276,25 @@ export default function Navbar() {
 
                             {isLoggedIn &&
                                 protectedLinks.map((link) => {
+                                    const Icon = link.icon;
+
+                                    return (
+                                        <Link
+                                            key={link.href}
+                                            href={link.href}
+                                            onClick={() => setIsOpen(false)}
+                                            className={`nav-link flex items-center gap-2 ${isActive(link.href) ? "nav-link-active" : ""
+                                                }`}
+                                        >
+                                            <Icon />
+                                            {link.label}
+                                        </Link>
+                                    );
+                                })}
+
+                            {isLoggedIn &&
+                                user?.role === "admin" &&
+                                adminLinks.map((link) => {
                                     const Icon = link.icon;
 
                                     return (
