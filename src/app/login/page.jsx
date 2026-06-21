@@ -104,8 +104,7 @@ export default function LoginPage() {
 
                     <label className="mt-6 grid gap-2">
                         <span className="font-black">Email</span>
-                        <div className="relative">
-                            <FiMail className="absolute left-4 top-4 text-slate-400" />
+                        <span className="">
                             <input
                                 type="email"
                                 name="email"
@@ -115,7 +114,7 @@ export default function LoginPage() {
                                 className="input input-bordered w-full rounded-2xl pl-11"
                                 required
                             />
-                        </div>
+                        </span>
                     </label>
 
                     <label className="mt-5 grid gap-2">
