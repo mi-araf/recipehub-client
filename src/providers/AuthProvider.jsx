@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 const AuthContext = createContext(undefined);
 
@@ -38,6 +39,12 @@ export function AuthProvider({ children }) {
     };
 
     const logout = async () => {
+        try {
+            await authClient.signOut();
+        } catch (error) {
+            console.warn("Better Auth signout failed:", error);
+        }
+
         await fetch(`${API_URL}/api/jwt/logout`, {
             method: "POST",
             credentials: "include",

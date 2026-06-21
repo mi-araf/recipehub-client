@@ -76,8 +76,8 @@ export default function LoginPage() {
                 errorCallbackURL: `${window.location.origin}/login?oauth=error`,
             });
         } catch (error) {
-            console.error(error);
-            toast.error("Google login failed");
+            console.error("Google login error:", error);
+            toast.error("Google login failed. Check OAuth config.");
         }
     };
 

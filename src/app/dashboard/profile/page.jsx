@@ -3,15 +3,17 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { FiAward, FiSave, FiUser, FiLogOut, FiShield } from "react-icons/fi";
+import { FiAward, FiSave, FiUser, FiLogOut, FiShield, FiX } from "react-icons/fi";
 
 import { apiRequest, getInitial } from "@/lib/dashboardApi";
 import { useAuth } from "@/providers/AuthProvider";
 
 export default function ProfilePage() {
     const { user, checkUser, logout } = useAuth();
+
     const router = useRouter();
     const [loggingOut, setLoggingOut] = useState(false);
+    const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
     const [formData, setFormData] = useState({ name: "", image: "" });
     const [saving, setSaving] = useState(false);
@@ -53,17 +55,18 @@ export default function ProfilePage() {
 
     const isPremium = Boolean(user?.isPremium);
 
+    const openLogoutModal = () => {
+        setLogoutModalOpen(true);
+    };
+
     const handleLogout = async () => {
-        const confirmed = window.confirm("Are you sure you want to logout?");
-
-        if (!confirmed) return;
-
         try {
             setLoggingOut(true);
 
             await logout();
 
             toast.success("Logged out successfully");
+            setLogoutModalOpen(false);
             router.push("/login");
             router.refresh();
         } catch (error) {
@@ -197,7 +200,7 @@ export default function ProfilePage() {
 
                         <button
                             type="button"
-                            onClick={handleLogout}
+                            onClick={openLogoutModal}
                             disabled={loggingOut}
                             className="btn h-14 rounded-2xl border-0 bg-red-500 px-8 text-base font-black text-white shadow-xl shadow-red-500/20 transition hover:-translate-y-0.5 hover:bg-red-600 disabled:opacity-70"
                         >
@@ -216,6 +219,90 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
+
+            {logoutModalOpen && (
+                <div className="fixed inset-0 z-999 grid place-items-center bg-slate-950/60 px-4 backdrop-blur-sm">
+                    <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-red-200/40 bg-base-100 shadow-2xl shadow-red-950/20">
+                        <div className="absolute -right-14 -top-14 size-36 rounded-full bg-red-500/10" />
+                        <div className="absolute -bottom-16 -left-10 size-44 rounded-full bg-orange-400/10" />
+
+                        <button
+                            type="button"
+                            onClick={() => setLogoutModalOpen(false)}
+                            disabled={loggingOut}
+                            className="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-base-200 text-base-content/70 transition hover:bg-red-100 hover:text-red-600"
+                            aria-label="Close logout modal"
+                        >
+                            <FiX size={18} />
+                        </button>
+
+                        <div className="relative p-7 text-center">
+                            <div className="mx-auto grid size-20 place-items-center rounded-[1.5rem] bg-red-100 text-red-600 shadow-xl shadow-red-500/10">
+                                <FiLogOut size={34} />
+                            </div>
+
+                            <p className="mt-6 text-xs font-black uppercase tracking-[0.24em] text-red-500">
+                                Confirm Logout
+                            </p>
+
+                            <h2 className="mt-2 text-3xl font-black">
+                                Leaving RecipeHub?
+                            </h2>
+
+                            <p className="mx-auto mt-3 max-w-sm text-sm font-medium leading-6 text-base-content/60">
+                                You will be signed out from this device. Your recipes, favorites,
+                                bookmarks, profile, and dashboard data will stay safe.
+                            </p>
+
+                            <div className="mt-7 rounded-3xl bg-red-50 p-4 text-left dark:bg-red-950/20">
+                                <div className="flex gap-3">
+                                    <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-red-100 text-red-600 dark:bg-red-950/50">
+                                        <FiShield size={18} />
+                                    </span>
+
+                                    <div>
+                                        <h3 className="font-black">Secure logout</h3>
+                                        <p className="mt-1 text-xs font-semibold leading-5 text-base-content/55">
+                                            Your authentication cookie will be cleared and you will be
+                                            redirected to the login page.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setLogoutModalOpen(false)}
+                                    disabled={loggingOut}
+                                    className="btn h-13 rounded-2xl border border-base-300 bg-base-100 font-black text-base-content hover:bg-base-200"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={handleLogout}
+                                    disabled={loggingOut}
+                                    className="btn h-13 rounded-2xl border-0 bg-red-500 font-black text-white shadow-xl shadow-red-500/20 hover:bg-red-600 disabled:opacity-70"
+                                >
+                                    {loggingOut ? (
+                                        <>
+                                            <span className="loading loading-spinner loading-sm" />
+                                            Logging out...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FiLogOut size={18} />
+                                            Yes, Logout
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
