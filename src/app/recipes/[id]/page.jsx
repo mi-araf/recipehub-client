@@ -17,6 +17,8 @@ import {
     FiX,
 } from "react-icons/fi";
 import Image from "next/image";
+import BookmarkButton from "@/components/recipes/BookmarkButton";
+import RatingBox from "@/components/recipes/RatingBox";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -337,35 +339,45 @@ export default function RecipeDetailsPage() {
                     )}
 
                     {authStatus === "authenticated" && (
-                        <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                            <div className="rh-card rounded-3xl p-5">
-                                <p className="rh-muted text-sm font-black uppercase tracking-widest">
-                                    Like Count
-                                </p>
-
-                                <p className="rh-title mt-2 text-4xl font-black">
-                                    {recipe.likesCount || 0}
-                                </p>
-                            </div>
-
+                        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                            {/* Like button full width */}
                             <button
                                 type="button"
                                 onClick={handleLike}
                                 disabled={actionLoading}
-                                className={`btn rounded-full border-0 font-black text-white ${hasLiked
-                                        ? "bg-slate-900 hover:bg-slate-800"
-                                        : "bg-rose-500 hover:bg-rose-600"
+                                className={`btn sm:col-span-2 h-14 rounded-2xl border-0 font-black text-base shadow-none transition-all ${hasLiked
+                                        ? "bg-rose-500 text-white hover:bg-rose-600"
+                                        : "bg-rose-100 text-rose-700 hover:bg-rose-200"
                                     }`}
                             >
                                 <FiHeart size={18} />
-                                {hasLiked ? "Remove Like" : "Like Recipe"}
+                                {hasLiked ? "Liked Recipe" : "Like Recipe"}
                             </button>
+
+                            {/* Likes count in 2 cool boxes */}
+                            <div className="sm:col-span-2 grid grid-cols-2 gap-3">
+                                <div className="rh-card rounded-2xl p-5">
+                                    <p className="text-3xl">❤️</p>
+                                    <p className="mt-2 text-sm font-black uppercase tracking-widest text-stone-500">
+                                        Like Count
+                                    </p>
+                                </div>
+
+                                <div className="rh-card flex flex-col items-center justify-center rounded-2xl p-5 text-center">
+                                    <p className="rh-title text-4xl font-black">
+                                        {recipe.likesCount || 0}
+                                    </p>
+                                    <p className="mt-1 text-sm font-bold text-stone-500">
+                                        Total Likes
+                                    </p>
+                                </div>
+                            </div>
 
                             <button
                                 type="button"
                                 onClick={handleFavorite}
                                 disabled={actionLoading}
-                                className={`btn rounded-full border-0 font-black text-white ${isFavorited
+                                className={`btn h-13 rounded-2xl border-0 font-black text-white ${isFavorited
                                         ? "bg-slate-900 hover:bg-slate-800"
                                         : "bg-emerald-600 hover:bg-emerald-700"
                                     }`}
@@ -374,10 +386,14 @@ export default function RecipeDetailsPage() {
                                 {isFavorited ? "Remove Favorite" : "Add Favorite"}
                             </button>
 
+                            <div className="flex">
+                                <BookmarkButton recipeId={recipe._id || id} />
+                            </div>
+
                             <button
                                 type="button"
                                 onClick={handlePurchase}
-                                className="btn rounded-full border-0 bg-amber-400 font-black text-stone-950 hover:bg-amber-500"
+                                className="btn h-13 rounded-2xl border-0 bg-amber-400 font-black text-stone-950 hover:bg-amber-500"
                             >
                                 <FiCreditCard size={18} />
                                 Purchase Recipe
@@ -386,7 +402,7 @@ export default function RecipeDetailsPage() {
                             <button
                                 type="button"
                                 onClick={() => setReportOpen(true)}
-                                className="btn rh-outline-btn rounded-full font-black"
+                                className="btn h-13 rounded-2xl border border-stone-200 bg-white font-black text-stone-700 hover:bg-stone-50"
                             >
                                 <FiAlertTriangle size={18} />
                                 Report
@@ -423,6 +439,10 @@ export default function RecipeDetailsPage() {
                 </p>
             </div>
 
+            <div className="mt-8">
+                <RatingBox recipeId={recipe._id || id} />
+            </div>
+
             {reportOpen && (
                 <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 px-4 backdrop-blur-sm">
                     <motion.div
@@ -441,7 +461,7 @@ export default function RecipeDetailsPage() {
                             </div>
 
                             <button
-                                type=". Admin will review this report laterbutton"
+                                type="button"
                                 onClick={() => setReportOpen(false)}
                                 className="grid size-10 place-items-center rounded-full bg-white text-stone-950"
                             >

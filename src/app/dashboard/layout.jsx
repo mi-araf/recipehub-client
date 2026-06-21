@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+    FiBarChart2,
     FiBookOpen,
+    FiBookmark,
     FiCreditCard,
     FiGrid,
     FiHeart,
@@ -11,7 +13,6 @@ import {
     FiShield,
     FiUser,
 } from "react-icons/fi";
-
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { useAuth } from "@/providers/AuthProvider";
 import { getInitial } from "@/lib/dashboardApi";
@@ -21,11 +22,13 @@ const dashboardLinks = [
     { label: "My Recipes", href: "/dashboard/my-recipes", icon: FiBookOpen },
     { label: "Add Recipe", href: "/dashboard/add-recipe", icon: FiPlusCircle },
     { label: "My Favorites", href: "/dashboard/favorites", icon: FiHeart },
+    { label: "Bookmarks", href: "/dashboard/bookmarks", icon: FiBookmark },
     {
         label: "Purchased Recipes",
         href: "/dashboard/purchased-recipes",
         icon: FiCreditCard,
     },
+    { label: "Analytics", href: "/dashboard/analytics", icon: FiBarChart2 },
     { label: "Profile", href: "/dashboard/profile", icon: FiUser },
     { label: "Premium", href: "/dashboard/premium", icon: FiShield },
 ];
@@ -84,8 +87,8 @@ export default function DashboardLayout({ children }) {
                                         key={item.href}
                                         href={item.href}
                                         className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black transition ${active
-                                                ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
-                                                : "hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-300"
+                                            ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+                                            : "hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-300"
                                             }`}
                                     >
                                         <Icon size={18} />
