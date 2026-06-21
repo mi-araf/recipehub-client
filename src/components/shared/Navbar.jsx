@@ -81,6 +81,19 @@ export default function Navbar() {
 
     const isActive = (href) => {
         if (href === "/") return pathname === "/";
+
+        if (href === "/dashboard") {
+            return (
+                pathname === "/dashboard" ||
+                (pathname.startsWith("/dashboard/") &&
+                    !pathname.startsWith(PROFILE_HREF))
+            );
+        }
+
+        if (href === PROFILE_HREF) {
+            return pathname === PROFILE_HREF;
+        }
+
         return pathname.startsWith(href);
     };
 
