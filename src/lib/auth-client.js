@@ -5,7 +5,4 @@ export const API_URL =
 
 export const authClient = createAuthClient({
     baseURL: API_URL,
-    fetchOptions: {
-        credentials: "include",
-    },
 });
