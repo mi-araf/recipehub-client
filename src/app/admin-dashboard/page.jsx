@@ -49,6 +49,7 @@ export default function AdminDashboardLayout({ children }) {
                                 <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-2xl bg-slate-950 text-xl font-black text-white">
                                     {user?.image ? (
                                         <Image
+                                            src={user.image}
                                             width={200} height={200}
                                             alt={user.name}
                                             referrerPolicy="no-referrer"

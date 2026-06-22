@@ -55,8 +55,12 @@ export default function LoginPage() {
 
             await checkUser();
 
-            toast.success("Login successful");
-            router.push(redirect);
+            toast.success("Login successful", {
+                id: "login-success"
+            })
+            router.replace(redirect);
+            router.refresh();
+            // router.push(redirect);
         } catch (error) {
             toast.error(error.message || "Login failed");
         } finally {
@@ -76,8 +80,9 @@ export default function LoginPage() {
                 errorCallbackURL: `${window.location.origin}/login?oauth=error`,
             });
         } catch (error) {
-            console.error("Google login error:", error);
-            toast.error("Google login failed. Check OAuth config.");
+            toast.error("Google login failed. Please try again.", {
+                id: "google-login-error",
+            });
         }
     };
 

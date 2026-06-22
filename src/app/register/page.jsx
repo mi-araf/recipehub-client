@@ -78,8 +78,12 @@ export default function RegisterPage() {
 
             await checkUser();
 
-            toast.success("Registration successful");
-            router.push("/");
+            toast.success("Registration successful", {
+                id: "register-success",
+            });
+            router.replace("/");
+            router.refresh();
+            // router.push("/");
         } catch (error) {
             toast.error(error.message || "Registration failed");
         } finally {
@@ -89,7 +93,7 @@ export default function RegisterPage() {
 
     const handleGoogleLogin = async () => {
         try {
-            const callbackURL = `${window.location.origin}/auth/google/callback`;
+            const callbackURL = `${window.location.origin}/auth/google/callback?redirect=/`;
 
             await authClient.signIn.social({
                 provider: "google",
@@ -97,8 +101,9 @@ export default function RegisterPage() {
                 errorCallbackURL: `${window.location.origin}/register?oauth=error`,
             });
         } catch (error) {
-            console.error(error);
-            toast.error("Google login failed");
+            toast.error("Google login failed. Please try again.", {
+                id: "google-register-error",
+            });
         }
     };
 

@@ -1,17 +1,16 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(undefined);
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [authLoading, setAuthLoading] = useState(true);
 
-    const checkUser = async () => {
+    const checkUser = useCallback(async () => {
         try {
             setAuthLoading(true);
 
@@ -30,43 +29,28 @@ export function AuthProvider({ children }) {
             setUser(result.data);
             return result.data;
         } catch (error) {
-            console.error("Auth check failed:", error);
             setUser(null);
             return null;
         } finally {
             setAuthLoading(false);
         }
-    };
+    }, []);
 
-    const logout = async () => {
-        try {
-            await authClient.signOut();
-        } catch (error) {
-            console.warn("Better Auth signout failed:", error);
-        }
-
+    const logout = useCallback(async () => {
         await fetch(`${API_URL}/api/jwt/logout`, {
             method: "POST",
             credentials: "include",
         });
 
         setUser(null);
-    };
+    }, []);
 
     useEffect(() => {
         checkUser();
-    }, []);
+    }, [checkUser]);
 
     return (
-        <AuthContext.Provider
-            value={{
-                user,
-                setUser,
-                authLoading,
-                checkUser,
-                logout,
-            }}
-        >
+        <AuthContext.Provider value={{ user, authLoading, checkUser, logout }}>
             {children}
         </AuthContext.Provider>
     );
