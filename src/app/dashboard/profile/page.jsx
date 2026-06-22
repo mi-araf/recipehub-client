@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { FiAward, FiSave, FiUser, FiLogOut, FiShield, FiX } from "react-icons/fi";
+import { FiAward, FiSave, FiUser, FiLogOut, FiShield, FiX, FiStar } from "react-icons/fi";
 
 import { apiRequest, getInitial } from "@/lib/dashboardApi";
 import { useAuth } from "@/providers/AuthProvider";
@@ -54,8 +54,16 @@ export default function ProfilePage() {
     };
 
     const isAdmin = user?.role === "admin";
-    const isPremium = Boolean(user?.isPremium);
-    const profileBadge = isAdmin ? "Admin" : isPremium ? "Premium Chef" : "Free Chef";
+    const isPlus = user?.premiumPlan === "plus";
+    const isPremium = user?.premiumPlan === "premium";
+
+    const profileBadge = isAdmin
+        ? "Admin"
+        : isPremium
+            ? "Premium Chef"
+            : isPlus
+                ? "Plus Chef"
+                : "Free Chef";
 
     const openLogoutModal = () => {
         setLogoutModalOpen(true);
@@ -115,10 +123,12 @@ export default function ProfilePage() {
                                 ? "bg-slate-950 text-white"
                                 : isPremium
                                     ? "bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300"
-                                    : "bg-base-200 text-base-content/70"
+                                    : isPlus
+                                        ? "bg-sky-100 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300"
+                                        : "bg-base-200 text-base-content/70"
                             }`}
                     >
-                        {isAdmin ? <FiShield /> : isPremium ? <FiAward /> : <FiUser />}
+                        {isAdmin ? <FiShield /> : isPremium ? <FiAward /> : isPlus ? <FiStar /> : <FiUser />}
                         {profileBadge}
                     </div>
                 </div>

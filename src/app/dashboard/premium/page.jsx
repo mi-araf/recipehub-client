@@ -21,48 +21,66 @@ const plans = [
         name: "Free",
         price: "$0",
         period: "forever",
-        description: "Perfect for trying RecipeHub.",
-        badge: "Starter",
+        description: "Start cooking, saving, and sharing with basic access.",
+        badge: "Starter Chef",
         icon: FiShield,
         highlight: false,
+        tone: "free",
+        slots: "2 recipe slots",
         features: [
             "Add up to 2 recipes",
-            "Browse public recipes",
-            "Save favorites",
-            "No premium profile badge",
+            "Browse all public recipes",
+            "Save favorites and bookmarks",
+            "Rate recipes from other chefs",
+            "Best for exploring RecipeHub",
+        ],
+        limitations: [
+            "No premium badge",
+            "No unlimited publishing",
         ],
     },
     {
         id: "plus",
         name: "Plus",
         price: "$4.99",
-        period: "one-time sandbox",
-        description: "For active food lovers.",
-        badge: "Smooth upgrade",
+        period: "sandbox payment",
+        description: "A smooth upgrade for active home chefs.",
+        badge: "Plus Chef",
         icon: FiStar,
         highlight: false,
+        tone: "plus",
+        slots: "40 recipe slots",
         features: [
-            "Plus checkout with Stripe",
-            "Saved transaction",
-            "Better creator status",
-            "Good for testing payments",
+            "Add up to 40 recipes",
+            "Plus Chef profile badge",
+            "Save payment transaction",
+            "Great for regular recipe creators",
+            "More room to grow your recipe collection",
+        ],
+        limitations: [
+            "Not unlimited",
+            "Upgrade to Premium for full access",
         ],
     },
     {
         id: "premium",
         name: "Premium",
         price: "$9.99",
-        period: "one-time sandbox",
-        description: "Unlock the full RecipeHub experience.",
-        badge: "Most powerful",
+        period: "sandbox payment",
+        description: "The full RecipeHub creator experience.",
+        badge: "Premium Chef",
         icon: FiZap,
         highlight: true,
+        tone: "premium",
+        slots: "Unlimited recipe slots",
         features: [
-            "Premium profile badge",
             "Unlimited add recipe",
-            "Saved transaction",
-            "Premium dashboard status",
+            "Premium Chef profile badge",
+            "Saved Stripe transaction",
+            "Best for serious creators",
+            "Unlock the highest publishing freedom",
         ],
+        limitations: [],
     },
 ];
 
@@ -133,17 +151,19 @@ export default function PremiumPage() {
             <div className="grid gap-5 xl:grid-cols-3">
                 {plans.map((plan) => {
                     const Icon = plan.icon;
+                    const currentPlan = user?.premiumPlan || "free";
+
                     const isCurrent =
                         plan.id === "free"
-                            ? !user?.isPremium
-                            : user?.isPremium && user?.premiumPlan === plan.id;
+                            ? currentPlan === "free" || !user?.isPremium
+                            : currentPlan === plan.id;
 
                     return (
                         <div
                             key={plan.id}
                             className={`rh-card relative overflow-hidden rounded-[2rem] p-6 ${plan.highlight
-                                    ? "border-2 border-emerald-400 shadow-2xl shadow-emerald-500/10"
-                                    : ""
+                                ? "border-2 border-emerald-400 shadow-2xl shadow-emerald-500/10"
+                                : ""
                                 }`}
                         >
                             {plan.highlight && (
@@ -169,6 +189,26 @@ export default function PremiumPage() {
                                 </span>
                             </div>
 
+                            <div className="mt-4 flex items-end gap-1">
+                                <span className="text-5xl font-black">{plan.price}</span>
+                                <span className="pb-2 text-sm font-bold opacity-60">
+                                    / {plan.period}
+                                </span>
+                            </div>
+
+                            <div
+                                className={`mt-5 rounded-2xl px-4 py-3 text-center font-black ${plan.id === "premium"
+                                        ? "bg-emerald-100 text-emerald-800"
+                                        : plan.id === "plus"
+                                            ? "bg-sky-100 text-sky-800"
+                                            : "bg-base-200 text-base-content/70"
+                                    }`}
+                            >
+                                {plan.slots}
+                            </div>
+
+                            <p className="rh-muted mt-4">{plan.description}</p>
+
                             <p className="rh-muted mt-4">{plan.description}</p>
 
                             <div className="mt-6 grid gap-3">
@@ -184,10 +224,10 @@ export default function PremiumPage() {
                                 onClick={() => startCheckout(plan.id)}
                                 disabled={plan.id === "free" || loadingPlan === plan.id}
                                 className={`btn mt-8 w-full rounded-full border-0 font-black ${plan.id === "free"
-                                        ? "bg-base-200 text-base-content/60"
-                                        : plan.highlight
-                                            ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                                            : "bg-slate-950 text-white hover:bg-slate-800"
+                                    ? "bg-base-200 text-base-content/60"
+                                    : plan.highlight
+                                        ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                                        : "bg-slate-950 text-white hover:bg-slate-800"
                                     }`}
                             >
                                 {loadingPlan === plan.id ? (
@@ -211,21 +251,6 @@ export default function PremiumPage() {
                 })}
             </div>
 
-            <div className="rh-card rounded-[2rem] p-6">
-                <h2 className="text-2xl font-black">Sandbox testing note</h2>
-                <p className="rh-muted mt-2">
-                    Use Stripe test mode. For successful test payment, use card number{" "}
-                    <span className="font-black">4242 4242 4242 4242</span>, any future
-                    expiry date, and any 3-digit CVC.
-                </p>
-
-                <Link
-                    href="/dashboard/add-recipe"
-                    className="btn rh-outline-btn mt-5 rounded-full"
-                >
-                    Back to Add Recipe
-                </Link>
-            </div>
         </div>
     );
 }
