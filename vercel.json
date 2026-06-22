@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/auth/:path*",
+            "destination": "https://recipehub-server-araf.vercel.app/api/auth/:path*"
+        }
+    ]
+}
