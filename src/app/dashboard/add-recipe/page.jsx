@@ -29,6 +29,38 @@ const initialForm = {
     ingredients: "",
     instructions: "",
 };
+const getSlotsText = (overview) => {
+    const limits = overview?.limits;
+    const stats = overview?.stats;
+
+    if (!limits || !stats) return "Loading...";
+
+    if (limits.recipeLimit === "Unlimited") {
+        return "Unlimited";
+    }
+
+    return `${stats.totalRecipes}/${limits.recipeLimit}`;
+};
+
+const getSlotsSubText = (overview) => {
+    const plan = overview?.limits?.plan;
+
+    if (plan === "premium") return "Premium Chef • Unlimited publishing";
+    if (plan === "plus") return "Plus Chef • 40 recipe slots";
+    if (plan === "admin") return "Admin • Unlimited publishing";
+
+    return "Free Chef • 2 recipe slots";
+};
+
+const getLimitMessage = (overview) => {
+    const plan = overview?.limits?.plan;
+
+    if (plan === "plus") {
+        return "Plus chefs can add up to 40 recipes. Upgrade to Premium for unlimited publishing.";
+    }
+
+    return "Free chefs can add up to 2 recipes. Upgrade to Plus or Premium to add more.";
+};
 
 export default function AddRecipePage() {
     const [formData, setFormData] = useState(initialForm);
@@ -58,7 +90,7 @@ export default function AddRecipePage() {
         event.preventDefault();
 
         if (limitReached) {
-            toast.error("Free users can add only 2 recipes. Upgrade to premium first.");
+            toast.error(getLimitMessage(overview));
             return;
         }
 
@@ -127,9 +159,7 @@ export default function AddRecipePage() {
                                 Recipe Slots
                             </p>
                             <p className="mt-1 text-2xl font-black">
-                                {overview.limits.isPremium
-                                    ? "Unlimited"
-                                    : `${overview.stats.totalRecipes}/${overview.limits.normalRecipeLimit}`}
+                                {getSlotsText(overview)}
                             </p>
                         </div>
                     )}
@@ -144,7 +174,7 @@ export default function AddRecipePage() {
                                 <FiShield size={22} />
                             </span>
                             <div>
-                                <h2 className="text-xl font-black">Free recipe limit reached</h2>
+                                <h2 className="text-xl font-black">{getLimitMessage(overview)}</h2>
                                 <p className="rh-muted mt-1">
                                     You have used your 2 free recipe slots. Premium will unlock
                                     unlimited recipe publishing and a premium profile badge.

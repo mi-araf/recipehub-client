@@ -66,18 +66,18 @@ const getPlanIcon = (plan) => {
 
 const getPlanCardClass = (plan) => {
     if (plan === "premium") {
-        return "from-amber-50 via-yellow-50 to-emerald-50 border-amber-200/70";
+        return "border-amber-200/70 bg-gradient-to-br from-amber-50 via-yellow-50 to-emerald-50 text-stone-950 dark:border-amber-500/20 dark:from-amber-950/30 dark:via-slate-950 dark:to-emerald-950/30 dark:text-white";
     }
 
     if (plan === "plus") {
-        return "from-sky-50 via-cyan-50 to-emerald-50 border-sky-200/70";
+        return "border-sky-200/70 bg-gradient-to-br from-sky-50 via-cyan-50 to-emerald-50 text-stone-950 dark:border-sky-500/20 dark:from-sky-950/35 dark:via-slate-950 dark:to-emerald-950/30 dark:text-white";
     }
 
     if (plan === "admin") {
-        return "from-slate-100 via-emerald-50 to-lime-50 border-slate-300/70";
+        return "border-slate-300/70 bg-gradient-to-br from-slate-100 via-emerald-50 to-lime-50 text-stone-950 dark:border-slate-700 dark:from-slate-900 dark:via-slate-950 dark:to-emerald-950/30 dark:text-white";
     }
 
-    return "from-stone-50 via-orange-50 to-emerald-50 border-base-300/70";
+    return "border-base-300/70 bg-gradient-to-br from-stone-50 via-orange-50 to-emerald-50 text-stone-950 dark:border-slate-700 dark:from-slate-900 dark:via-slate-950 dark:to-emerald-950/30 dark:text-white";
 };
 
 export default function DashboardOverviewPage() {
@@ -171,7 +171,7 @@ export default function DashboardOverviewPage() {
             >
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex items-start gap-4">
-                        <span className="grid size-16 shrink-0 place-items-center rounded-[1.3rem] bg-white/80 text-emerald-700 shadow-lg shadow-emerald-500/10">
+                        <span className="grid size-16 shrink-0 place-items-center rounded-[1.3rem] bg-white/80 text-emerald-700 shadow-lg shadow-emerald-500/10 dark:bg-white/10 dark:text-emerald-300 dark:ring-1 dark:ring-white/10">
                             <PlanIcon size={28} />
                         </span>
 
@@ -189,7 +189,7 @@ export default function DashboardOverviewPage() {
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2 lg:min-w-80">
-                        <div className="rounded-3xl bg-white/75 p-5 text-center shadow-sm">
+                        <div className="rounded-3xl bg-white/80 p-5 text-center text-stone-950 shadow-sm dark:bg-white/10 dark:text-white dark:ring-1 dark:ring-white/10">
                             <p className="text-xs font-black uppercase tracking-[0.18em] text-base-content/50">
                                 Recipe Limit
                             </p>
@@ -203,7 +203,7 @@ export default function DashboardOverviewPage() {
                             </p>
                         </div>
 
-                        <div className="rounded-3xl bg-white/75 p-5 text-center shadow-sm">
+                        <div className="rounded-3xl bg-white/80 p-5 text-center text-stone-950 shadow-sm dark:bg-white/10 dark:text-white dark:ring-1 dark:ring-white/10">
                             <p className="text-xs font-black uppercase tracking-[0.18em] text-base-content/50">
                                 Remaining
                             </p>
@@ -372,8 +372,8 @@ export default function DashboardOverviewPage() {
                     <Link
                         href={limits?.canAddRecipe ? "/dashboard/add-recipe" : "/dashboard/premium"}
                         className={`btn mt-6 w-full rounded-full border-0 font-black ${limits?.canAddRecipe
-                                ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                                : "bg-slate-950 text-white hover:bg-slate-800"
+                            ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                            : "bg-slate-950 text-white hover:bg-slate-800"
                             }`}
                     >
                         {limits?.canAddRecipe ? (
