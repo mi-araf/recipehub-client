@@ -205,13 +205,40 @@ export default function RecipeDetailsPage() {
         }
     };
 
-    const handlePurchase = () => {
+    const handlePurchase = async () => {
         if (!user) {
             toast.error("Please login to purchase this recipe");
             return;
         }
 
-        toast("Stripe checkout will be connected later");
+        try {
+            setActionLoading(true);
+
+            const response = await fetch(
+                `${API_URL}/api/payments/create-recipe-checkout-session/${id}`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Could not start checkout");
+            }
+
+            if (result.alreadyPurchased) {
+                toast.success(result.message || "You already purchased this recipe");
+                return;
+            }
+
+            window.location.href = result.url;
+        } catch (error) {
+            toast.error(error.message || "Checkout failed");
+        } finally {
+            setActionLoading(false);
+        }
     };
 
     if (status === "loading") {
@@ -346,8 +373,8 @@ export default function RecipeDetailsPage() {
                                 onClick={handleLike}
                                 disabled={actionLoading}
                                 className={`btn sm:col-span-2 h-14 rounded-2xl border-0 font-black text-base shadow-none transition-all ${hasLiked
-                                        ? "bg-rose-500 text-white hover:bg-rose-600"
-                                        : "bg-rose-100 text-rose-700 hover:bg-rose-200"
+                                    ? "bg-rose-500 text-white hover:bg-rose-600"
+                                    : "bg-rose-100 text-rose-700 hover:bg-rose-200"
                                     }`}
                             >
                                 <FiHeart size={18} />
@@ -378,8 +405,8 @@ export default function RecipeDetailsPage() {
                                 onClick={handleFavorite}
                                 disabled={actionLoading}
                                 className={`btn h-13 rounded-2xl border-0 font-black text-white ${isFavorited
-                                        ? "bg-slate-900 hover:bg-slate-800"
-                                        : "bg-emerald-600 hover:bg-emerald-700"
+                                    ? "bg-slate-900 hover:bg-slate-800"
+                                    : "bg-emerald-600 hover:bg-emerald-700"
                                     }`}
                             >
                                 <FiStar size={18} />
