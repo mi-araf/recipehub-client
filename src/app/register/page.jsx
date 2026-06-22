@@ -101,7 +101,9 @@ export default function RegisterPage() {
                 errorCallbackURL: `${window.location.origin}/register?oauth=error`,
             });
         } catch (error) {
-            toast.error("Google login failed. Please try again.", {
+            console.error("Google register error:", error);
+
+            toast.error("Google login failed. Check OAuth production URLs.", {
                 id: "google-register-error",
             });
         }
