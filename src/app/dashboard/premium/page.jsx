@@ -43,7 +43,7 @@ const plans = [
         id: "plus",
         name: "Plus",
         price: "$4.99",
-        period: "sandbox payment",
+        period: "one-time payment",
         description: "A smooth upgrade for active home chefs.",
         badge: "Plus Chef",
         icon: FiStar,
@@ -66,7 +66,7 @@ const plans = [
         id: "premium",
         name: "Premium",
         price: "$9.99",
-        period: "sandbox payment",
+        period: "one-time payment",
         description: "The full RecipeHub creator experience.",
         badge: "Premium Chef",
         icon: FiZap,
@@ -189,13 +189,6 @@ export default function PremiumPage() {
                                 </span>
                             </div>
 
-                            <div className="mt-4 flex items-end gap-1">
-                                <span className="text-5xl font-black">{plan.price}</span>
-                                <span className="pb-2 text-sm font-bold opacity-60">
-                                    / {plan.period}
-                                </span>
-                            </div>
-
                             <div
                                 className={`mt-5 rounded-2xl px-4 py-3 text-center font-black ${plan.id === "premium"
                                         ? "bg-emerald-100 text-emerald-800"
@@ -206,8 +199,6 @@ export default function PremiumPage() {
                             >
                                 {plan.slots}
                             </div>
-
-                            <p className="rh-muted mt-4">{plan.description}</p>
 
                             <p className="rh-muted mt-4">{plan.description}</p>
 
