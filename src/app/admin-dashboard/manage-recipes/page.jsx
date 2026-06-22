@@ -40,7 +40,7 @@ export default function ManageRecipesPage() {
 
     const handleFeature = async (recipe) => {
         try {
-            await apiRequest(`/api/admin/recipes/${recipe._id}/feature`, {
+            const result = await apiRequest(`/api/admin/recipes/${recipe._id}/feature`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,13 +50,15 @@ export default function ManageRecipesPage() {
                 }),
             });
 
-            toast.success(
-                recipe.isFeatured
-                    ? "Recipe removed from featured"
-                    : "Recipe added to featured"
+            const updatedRecipe = result.data;
+
+            setRecipes((currentRecipes) =>
+                currentRecipes.map((item) =>
+                    item._id === updatedRecipe._id ? updatedRecipe : item
+                )
             );
 
-            loadRecipes();
+            toast.success(result.message || "Featured status updated");
         } catch (error) {
             toast.error(error.message || "Could not update featured status");
         }
@@ -90,8 +92,31 @@ export default function ManageRecipesPage() {
                     Moderate every recipe.
                 </h1>
 
-                <p className="recipehub-muted-text mt-3">
-                    View, edit, delete, and feature recipes from all users.
+                <p className="recipehub-muted-text mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-1 leading-none">
+                    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                        <FiEye className="relative -top-px h-4 w-4 shrink-0" />
+                        View
+                    </span>
+                    <span>,</span>
+
+                    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                        <FiEdit3 className="relative -top-px h-4 w-4 shrink-0" />
+                        edit
+                    </span>
+                    <span>,</span>
+
+                    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                        <FiTrash2 className="relative -top-px h-4 w-4 shrink-0" />
+                        delete
+                    </span>
+                    <span>, and</span>
+
+                    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                        <FiStar className="relative -top-px h-4 w-4 shrink-0" />
+                        feature
+                    </span>
+
+                    <span>recipes from all users.</span>
                 </p>
             </div>
 
@@ -218,8 +243,8 @@ export default function ManageRecipesPage() {
                                                 <button
                                                     onClick={() => handleFeature(recipe)}
                                                     className={`btn btn-sm rounded-full border-0 text-white ${recipe.isFeatured
-                                                            ? "bg-slate-900 hover:bg-slate-800"
-                                                            : "bg-amber-500 hover:bg-amber-600"
+                                                        ? "bg-slate-900 hover:bg-slate-800"
+                                                        : "bg-amber-500 hover:bg-amber-600"
                                                         }`}
                                                 >
                                                     <FiStar />

@@ -1,18 +1,25 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_URL =
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "");
 
-export const apiEndpoint = (path) => {
-  return `${API_URL}${path}`;
+export const apiEndpoint = (path = "") => {
+    const cleanPath = path.startsWith("/") ? path : `/${path}`;
+    return `${API_URL}${cleanPath}`;
 };
 
-export const fetcher = async (path) => {
-  const response = await fetch(apiEndpoint(path), {
-    cache: "no-store",
-    credentials: "include",
-  });
+export const fetcher = async (path, options = {}) => {
+    const response = await fetch(apiEndpoint(path), {
+        cache: "no-store",
+        credentials: "include",
+        ...options,
+    });
 
-  if (!response.ok) {
-    throw new Error("Request failed");
-  }
+    const result = await response.json().catch(() => null);
 
-  return response.json();
+    if (!response.ok || result?.success === false) {
+        throw new Error(
+            result?.message || `Request failed with status ${response.status}`
+        );
+    }
+
+    return result;
 };

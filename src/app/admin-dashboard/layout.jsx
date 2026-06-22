@@ -9,6 +9,7 @@ import {
     FiGrid,
     FiShield,
     FiUsers,
+    FiUser,
 } from "react-icons/fi";
 
 import AdminRoute from "@/components/auth/AdminRoute";
@@ -29,6 +30,11 @@ const adminLinks = [
         label: "Transactions",
         href: "/admin-dashboard/transactions",
         icon: FiCreditCard,
+    },
+    {
+        label: "Profile",
+        href: "/admin-dashboard/profile",
+        icon: FiUser,
     },
 ];
 
@@ -82,8 +88,8 @@ export default function AdminDashboardLayout({ children }) {
                                         key={item.href}
                                         href={item.href}
                                         className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black transition ${active
-                                                ? "bg-slate-950 text-white shadow-lg shadow-slate-950/20"
-                                                : "hover:bg-emerald-50 hover:text-emerald-700"
+                                            ? "bg-slate-950 text-white shadow-lg shadow-slate-950/20"
+                                            : "hover:bg-emerald-50 hover:text-emerald-700"
                                             }`}
                                     >
                                         <Icon size={18} />

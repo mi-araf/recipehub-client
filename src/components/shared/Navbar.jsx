@@ -12,21 +12,25 @@ import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "@/providers/AuthProvider";
 import Image from "next/image";
 
-const PROFILE_HREF = "/dashboard/profile";
 
 const publicLinks = [
     { label: "Home", href: "/" },
     { label: "Browse Recipes", href: "/recipes" },
 ];
 
-const protectedLinks = [
+const PROFILE_HREF = "/dashboard/profile";
+const ADMIN_PROFILE_HREF = "/admin-dashboard/profile";
+
+const userProtectedLinks = [
     { label: "Dashboard", href: "/dashboard", icon: RxDashboard },
     { label: "Profile", href: PROFILE_HREF, icon: FiUser },
 ];
 
-const adminLinks = [
+const adminProtectedLinks = [
     { label: "Admin", href: "/admin-dashboard", icon: FiShield },
+    { label: "Profile", href: ADMIN_PROFILE_HREF, icon: FiUser },
 ];
+
 
 function getUserInfo(user) {
     const currentUser = user?.user || user || {};
@@ -79,27 +83,52 @@ export default function Navbar() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const { user, authLoading } = useAuth();
-
     const isLoggedIn = Boolean(user);
+
+    const isAdmin = user?.role === "admin";
+    const visibleProtectedLinks = isAdmin
+        ? [
+            { label: "Admin", href: "/admin-dashboard", icon: FiShield },
+            { label: "Profile", href: "/admin-dashboard/profile", icon: FiUser },
+        ]
+        : [
+            { label: "Dashboard", href: "/dashboard", icon: RxDashboard },
+            { label: "Profile", href: "/dashboard/profile", icon: FiUser },
+        ];
+
+    const profileHref = isAdmin
+        ? "/admin-dashboard/profile"
+        : "/dashboard/profile";
+    // const profileHref = isAdmin ? ADMIN_PROFILE_HREF : PROFILE_HREF;
+    // const visibleProtectedLinks = isAdmin ? adminProtectedLinks : userProtectedLinks;
+
     const { name } = getUserInfo(user);
 
     const isActive = (href) => {
         if (href === "/") return pathname === "/";
 
         if (href === "/admin-dashboard") {
-            return pathname === "/admin-dashboard" || pathname.startsWith("/admin-dashboard/");
+            return (
+                pathname === "/admin-dashboard" ||
+                (pathname.startsWith("/admin-dashboard/") &&
+                    pathname !== "/admin-dashboard/profile")
+            );
+        }
+
+        if (href === "/admin-dashboard/profile") {
+            return pathname === "/admin-dashboard/profile";
         }
 
         if (href === "/dashboard") {
             return (
                 pathname === "/dashboard" ||
                 (pathname.startsWith("/dashboard/") &&
-                    !pathname.startsWith(PROFILE_HREF))
+                    pathname !== "/dashboard/profile")
             );
         }
 
-        if (href === PROFILE_HREF) {
-            return pathname === PROFILE_HREF;
+        if (href === "/dashboard/profile") {
+            return pathname === "/dashboard/profile";
         }
 
         return pathname.startsWith(href);
@@ -137,7 +166,7 @@ export default function Navbar() {
                     ))}
 
                     {isLoggedIn &&
-                        protectedLinks.map((link) => {
+                        visibleProtectedLinks.map((link) => {
                             const Icon = link.icon;
 
                             return (
@@ -153,7 +182,7 @@ export default function Navbar() {
                             );
                         })}
 
-                    {isLoggedIn &&
+                    {/* {isLoggedIn &&
                         user?.role === "admin" &&
                         adminLinks.map((link) => {
                             const Icon = link.icon;
@@ -169,7 +198,7 @@ export default function Navbar() {
                                     {link.label}
                                 </Link>
                             );
-                        })}
+                        })} */}
                 </div>
 
                 <div className="hidden items-center gap-3 md:flex">
@@ -188,7 +217,7 @@ export default function Navbar() {
                             </Link>
 
                             <Link
-                                href={PROFILE_HREF}
+                                href={profileHref}
                                 className="group flex items-center gap-3 rounded-full border border-base-300/70 bg-base-100/80 py-1 pl-1 pr-4 transition hover:border-emerald-400/60 hover:bg-emerald-50/80 hover:shadow-lg hover:shadow-emerald-500/10 dark:hover:bg-emerald-950/20"
                                 title="Go to profile"
                             >
@@ -248,7 +277,7 @@ export default function Navbar() {
                                 <div className="h-14 animate-pulse rounded-2xl bg-base-300/60" />
                             ) : isLoggedIn ? (
                                 <Link
-                                    href={PROFILE_HREF}
+                                    href={profileHref}
                                     onClick={() => setIsOpen(false)}
                                     className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-50/70 p-3 dark:bg-emerald-950/20"
                                 >
@@ -275,7 +304,7 @@ export default function Navbar() {
                             ))}
 
                             {isLoggedIn &&
-                                protectedLinks.map((link) => {
+                                visibleProtectedLinks.map((link) => {
                                     const Icon = link.icon;
 
                                     return (
@@ -292,7 +321,7 @@ export default function Navbar() {
                                     );
                                 })}
 
-                            {isLoggedIn &&
+                            {/* {isLoggedIn &&
                                 user?.role === "admin" &&
                                 adminLinks.map((link) => {
                                     const Icon = link.icon;
@@ -309,7 +338,7 @@ export default function Navbar() {
                                             {link.label}
                                         </Link>
                                     );
-                                })}
+                                })} */}
 
                             {!authLoading && !isLoggedIn && (
                                 <div className="mt-2 grid grid-cols-2 gap-2">
