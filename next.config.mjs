@@ -12,16 +12,6 @@ const nextConfig = {
             },
             {
                 protocol: "https",
-                hostname: "**",
-            },
-            {
-                protocol: "http",
-                hostname: "**",
-                // port: "",
-                // pathname: "/**",
-            },
-            {
-                protocol: "https",
                 hostname: "i.ibb.co",
                 port: "",
                 pathname: "/**",
@@ -38,7 +28,25 @@ const nextConfig = {
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "**",
+                port: "",
+                pathname: "/**",
+            },
         ],
+    },
+
+    async rewrites() {
+        const apiUrl =
+            process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+        return [
+            {
+                source: "/api/auth/:path*",
+                destination: `${apiUrl}/api/auth/:path*`,
+            },
+        ];
     },
 
     devIndicators: false,
