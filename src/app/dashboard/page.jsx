@@ -164,10 +164,9 @@ export default function DashboardOverviewPage() {
                 </p>
             </div>
 
-            <div
-                className={`overflow-hidden rounded-[2rem] border bg-linear-to-br p-6 shadow-xl shadow-emerald-950/5 ${getPlanCardClass(
-                    plan
-                )}`}
+            <div className={`overflow-hidden rounded-[2rem] border p-6 shadow-xl shadow-emerald-950/5 ${getPlanCardClass(
+                plan
+            )}`}
             >
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex items-start gap-4">
@@ -176,43 +175,43 @@ export default function DashboardOverviewPage() {
                         </span>
 
                         <div>
-                            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">
+                            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700 dark:text-emerald-300">
                                 Membership
                             </p>
 
                             <h2 className="mt-2 text-3xl font-black">{planLabel}</h2>
 
-                            <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-base-content/65">
+                            <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-stone-700 dark:text-white/70">
                                 {getPlanDescription(plan, limits)}
                             </p>
                         </div>
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2 lg:min-w-80">
-                        <div className="rounded-3xl bg-white/80 p-5 text-center text-stone-950 shadow-sm dark:bg-white/10 dark:text-white dark:ring-1 dark:ring-white/10">
-                            <p className="text-xs font-black uppercase tracking-[0.18em] text-base-content/50">
+                        <div className="rounded-3xl bg-white/85 p-5 text-center text-stone-950 shadow-sm ring-1 ring-black/5 dark:bg-white/10 dark:text-white dark:ring-white/10">
+                            <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-500 dark:text-white/50">
                                 Recipe Limit
                             </p>
 
-                            <p className="mt-2 text-3xl font-black">
+                            <p className="mt-2 text-4xl font-black text-stone-950 dark:text-white">
                                 {isUnlimited ? "∞" : recipeLimit}
                             </p>
 
-                            <p className="mt-1 text-sm font-bold opacity-60">
+                            <p className="mt-1 text-sm font-bold text-stone-500 dark:text-white/60">
                                 {isUnlimited ? "Unlimited slots" : "Total slots"}
                             </p>
                         </div>
 
-                        <div className="rounded-3xl bg-white/80 p-5 text-center text-stone-950 shadow-sm dark:bg-white/10 dark:text-white dark:ring-1 dark:ring-white/10">
-                            <p className="text-xs font-black uppercase tracking-[0.18em] text-base-content/50">
+                        <div className="rounded-3xl bg-white/85 p-5 text-center text-stone-950 shadow-sm ring-1 ring-black/5 dark:bg-white/10 dark:text-white dark:ring-white/10">
+                            <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-500 dark:text-white/50">
                                 Remaining
                             </p>
 
-                            <p className="mt-2 text-3xl font-black">
+                            <p className="mt-2 text-4xl font-black text-stone-950 dark:text-white">
                                 {isUnlimited ? "∞" : remainingSlots}
                             </p>
 
-                            <p className="mt-1 text-sm font-bold opacity-60">
+                            <p className="mt-1 text-sm font-bold text-stone-500 dark:text-white/60">
                                 {isUnlimited ? "No limit" : "Slots left"}
                             </p>
                         </div>

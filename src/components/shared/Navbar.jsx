@@ -7,15 +7,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { GiChefToque } from "react-icons/gi";
 import { PiSparkleFill } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
-import { FiLogIn, FiMenu, FiUser, FiX, FiShield } from "react-icons/fi";
+import { FiLogIn, FiMenu, FiUser, FiX, FiShield, FiHome } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "@/providers/AuthProvider";
 import Image from "next/image";
 
 
 const publicLinks = [
-    { label: "Home", href: "/" },
-    { label: "Browse Recipes", href: "/recipes" },
+    { label: "Home", href: "/", icon: FiHome },
+    { label: "Browse Recipes", href: "/recipes", icon: GiChefToque },
 ];
 
 const PROFILE_HREF = "/dashboard/profile";
@@ -159,8 +159,9 @@ export default function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`nav-link ${isActive(link.href) ? "nav-link-active" : ""}`}
+                            className={`nav-link flex items-center gap-2 ${isActive(link.href) ? "nav-link-active" : ""}`}
                         >
+                            {link.icon && <link.icon />}
                             {link.label}
                         </Link>
                     ))}
@@ -297,8 +298,9 @@ export default function Navbar() {
                                     key={link.href}
                                     href={link.href}
                                     onClick={() => setIsOpen(false)}
-                                    className={`nav-link ${isActive(link.href) ? "nav-link-active" : ""}`}
+                                    className={`nav-link flex items-center gap-2 ${isActive(link.href) ? "nav-link-active" : ""}`}
                                 >
+                                    {link.icon && <link.icon />}
                                     {link.label}
                                 </Link>
                             ))}
