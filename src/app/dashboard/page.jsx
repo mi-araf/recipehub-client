@@ -193,25 +193,25 @@ export default function DashboardOverviewPage() {
                                 Recipe Limit
                             </p>
 
-                            <p className="mt-2 text-4xl font-black text-stone-950 dark:text-white">
+                            <p className="mt-2 text-4xl font-black text-black dark:text-white">
                                 {isUnlimited ? "∞" : recipeLimit}
                             </p>
 
-                            <p className="mt-1 text-sm font-bold text-stone-500 dark:text-white/60">
+                            <p className="mt-1 text-sm font-bold text-black dark:text-white/60">
                                 {isUnlimited ? "Unlimited slots" : "Total slots"}
                             </p>
                         </div>
 
-                        <div className="rounded-3xl bg-white/85 p-5 text-center text-stone-950 shadow-sm ring-1 ring-black/5 dark:bg-white/10 dark:text-white dark:ring-white/10">
+                        <div className="rounded-3xl bg-white/85 p-5 text-center text-black shadow-sm ring-1 ring-black/5 dark:bg-white/10 dark:text-white dark:ring-white/10">
                             <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-500 dark:text-white/50">
                                 Remaining
                             </p>
 
-                            <p className="mt-2 text-4xl font-black text-stone-950 dark:text-white">
+                            <p className="mt-2 text-4xl font-black text-black dark:text-white">
                                 {isUnlimited ? "∞" : remainingSlots}
                             </p>
 
-                            <p className="mt-1 text-sm font-bold text-stone-500 dark:text-white/60">
+                            <p className="mt-1 text-sm font-bold text-black dark:text-white/60">
                                 {isUnlimited ? "No limit" : "Slots left"}
                             </p>
                         </div>
